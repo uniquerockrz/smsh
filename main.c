@@ -45,19 +45,31 @@ void start(){
         start();
     }
 }
-void get_page(const char* url, const char* file_name)
+int get_page(const char* url, const char* file_name)
 {
     /* get_page()
      * function to download the RSS feed specified by url and
      * save it by file_name
      */
+    CURLcode result;
+    //curl_global_init(CURL_GOBAL_ALL);
     CURL* easyhandle = curl_easy_init();
-    curl_easy_setopt( easyhandle, CURLOPT_URL, url ) ;
-    FILE* file = fopen( file_name, "w");
-    curl_easy_setopt( easyhandle, CURLOPT_WRITEDATA, file) ;
-    curl_easy_perform( easyhandle );
-    curl_easy_cleanup( easyhandle );
-    fclose(file);
+    if(easyhandle)
+    {
+		curl_easy_setopt( easyhandle, CURLOPT_URL, url );
+		FILE* file = fopen( file_name, "w");
+		curl_easy_setopt( easyhandle, CURLOPT_WRITEDATA, file) ;
+		result=curl_easy_perform( easyhandle );
+		//printf("%d",result);
+		if(result!=0)
+		{
+			//printf("result =%d",result);
+			return 0;
+		}
+		curl_easy_cleanup( easyhandle );
+		fclose(file);
+	}
+    return 1;
 }
 void downloadfeed()
 {
@@ -65,8 +77,15 @@ void downloadfeed()
      * function to download the feed and store it
      * in a file
      */
-    get_page( "http://tagg.in/Rss/sauravmodak", "sauravmodak" ) ;
-    printf("done\n");
+    if(get_page( "http://tagg.in/Rss/sauravmodak", "sauravmodak" ))
+    {
+    	printf("done\n");
+    }
+    else
+    {
+    	printf(" \n connection failed , Please test your internet connection \n");
+    	exit(0);
+    }
 }
 void trimfeed(){
     /* this function removes the white spaces
@@ -102,6 +121,7 @@ void trim(char src[200], char dest[200]){
     dest[j]='\0';
 }
 int analyzefeed(){
+	//printf("test");
     // feed parser
     char str[200], command[200], thisDate[80], lastDate[80];
     FILE *fp, *fp1, *fp2;
@@ -121,7 +141,8 @@ int analyzefeed(){
     strcpy(thisDate, str);
     fp1=fopen("lastmsg.txt", "r");
     if(fp1==NULL){
-        fclose(fp1);
+    	printf("file do not exist");
+        //fclose(fp1);
         fp2=fopen("lastmsg.txt", "w");
         fclose(fp2);
         fp1=fopen("lastmsg.txt", "r");
