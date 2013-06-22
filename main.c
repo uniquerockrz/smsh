@@ -52,7 +52,6 @@ int get_page(const char* url, const char* file_name)
      * save it by file_name
      */
     CURLcode result;
-    //curl_global_init(CURL_GOBAL_ALL);
     CURL* easyhandle = curl_easy_init();
     if(easyhandle)
     {
@@ -63,13 +62,13 @@ int get_page(const char* url, const char* file_name)
 		//printf("%d",result);
 		if(result!=0)
 		{
-			//printf("result =%d",result);
+			//unable to get feeds
 			return 0;
 		}
 		curl_easy_cleanup( easyhandle );
 		fclose(file);
 	}
-    return 1;
+    return 1; //successfull
 }
 void downloadfeed()
 {
@@ -97,7 +96,7 @@ void trimfeed(){
     void trim(char *, char *);
     fp1=fopen("sauravmodak", "r");
     if(fp1==NULL){
-        printf("Cannot open file.. Check your internet connectivity");
+    	printf("Cannot open file.. Check your internet connectivity");
         exit(0);
     }
     fp2=fopen("feed.txt", "w");
@@ -121,7 +120,6 @@ void trim(char src[200], char dest[200]){
     dest[j]='\0';
 }
 int analyzefeed(){
-	//printf("test");
     // feed parser
     char str[200], command[200], thisDate[80], lastDate[80];
     FILE *fp, *fp1, *fp2;
