@@ -1,0 +1,160 @@
+=======================================================
+
+file: README
+Created by: Krishnashish Gogoi
+Copyright 2013 Krishnashish Gogoi
+Licensed under GPLv3
+
+
+Yeah, I just wrote all that stuff to look cool.
+
+========================================================
+
+You can check the original README file in the original/ directory.
+
+
+
+=== Introduction ===
+
+smsh is an application that basically allows you to control your
+Linux machine remotely through SMS. 
+
+As of now, it uses a third-party service called tagg.in, which is 
+essentially an sms blog. As such, it is extremely limited at the
+moment and shouldn't be used.
+
+Also, much of the code is untested and is under heavy development.
+
+
+
+=== Build Dependencies ===
+
+smsh currently makes use of the curl library to download files.
+Hence, in order to build it, you need to have the curl development
+libraries installed. In Debian, it is the libcurl-dev package.
+
+Check the package repository of your distro for the curl development
+library package. Or you can always download them from the offcial
+curl website. http://curl.haxx.se
+
+Also, make sure you have the build-essential or base-devel packages
+installed. These packages are distro-specific and usually contain 
+stuff like gcc, make, etc.
+
+
+
+=== How to build ===
+
+I added a little makefile just to make things easy. It's still a
+crappy makefile, no arguing on that, but it gets things done.
+All you need to do is:
+
+	cd source
+	make smsh
+
+It should automagically build it.
+To do a cleanup, run:
+
+	make clean
+
+
+
+=== How smsh works ===
+
+I'll put it simply here. The third party serice, tagg.in maintains
+an RSS feed page for every registered user where the texts they send
+sit quietly. So the url looks like: http://tagg.in/Rss/user/
+
+What this application does is downloads that page, saves it in the
+directory of the executable as ".downloaded_feed", then trims the
+whitespaces and saves it in another file as ".feed". These files
+remain hidden unless you decide to go and pull down their pants.
+
+Also, at the start of the program, the time at which the program starts is
+recorded in a file called "lastmsg.txt". 
+
+Now, the ".feed" is parsed by the functions in analyze.c. It basically first
+looks for the </image> tag, followed by the <pubDate> tag. The </image> tag is 
+searched basically to get to a "starting point" so as to avoid similar upcoming
+tags before it. After that, the <pubDate> tag contains the date of the text.
+The date is parsed using another function and then compared to the date stored in
+lastmsg.txt. If the date in lastmsg.txt is "greater" than the one in <pubdate>, then
+nothing happens, else the date in <pubdate> replaces the date in lastmsg.txt.
+
+Once that happens, the parser looks for the <description> tags and starts extracting
+the command. And then it executes it....regardless of it being a real command or not.
+Really, that's how it rolls. I'll try fixing it in the upcoming days maybe. Need to
+set up error handling for the system() call as well.
+
+Basically, all of that happens in a loop called by main(), which in the original was
+done using recursion. I thought recursion might be a bad idea since in practical
+usage, the program might need to run for a long time and as such each recursive
+call of the function would only start taking up space on the stack. I don't know if
+I'm being stupid but I'm alright as long as it works.
+
+Check the FIXES file for a list of stuff I've fixed since the original.
+You can check the original files in the original/ directory.
+
+
+=== About this fork ===
+
+I use this fork mostly for developing smsh in my own way. I routinely plan on
+sending out required changes to the original smsh as long as the original author
+keeps on accepting and maintaining it. My primary reason for maintaining a separate
+fork on my own is to use this as grounds for practicing C. It's gonna be an absolute
+bloodshed down here with the program breaking more often than actually working. But hey,
+that's the fun.
+
+Think of this as my playground. Nothing more, nothing less. I just want my playground
+to be mine, and so I plan to do things my way here while sending changes back to the 
+original. Of course, you're all welcome to play. Just don't step on the flowers. Mom
+isn't quite fond of kids stepping on her flowers >.>
+
+
+
+=== Security Concerns ===
+
+Code-wise, it might just be disaster. Code quality is horrible at the moment. Lots of
+crappy string functions and handling.
+
+"Though I walk through the valley of the shadow of string and array, I shall fear no
+buffer overflows."
+
+Basically, that. Also, code has no error-handling at a lot of places.Besides, as of now, 
+it hardly produces output I want as I haven't gotten much time to test it out.
+
+Another security issue, an actual one, is that the rss feed page in tagg.in isn't exactly
+password protected so to say. So, anyone can just download the xml file through curl
+and read all the messages. GG. I definitely hate this third party dependency. If anyone
+makes something like that with no time limits and better protection, I'd love you like a
+lover.
+
+ 
+
+=== License ===
+
+I really don't know if I even possess the right to license the files in this fork,
+because it is after all a fork of the original. Then again, the original didn't have
+anything in it so I think it's fine. 
+
+And so, like all cute coders out there, I shall license this program under the 
+GENERAL PUBLIC LICENSE VERSION 3. YUS, IN CAPS.
+
+You can find the license in the COPYING file. If I'm violating any laws or whatever,
+let me know before filing a case against me or sending me to jail. I hate jail. 
+
+
+
+=== Miscellaneous stuff ===
+
+Well, the original author can really use some help with this I believe. There hasn't
+really been any development on it for months, so contribute to THAT repository. I'm fine
+if you send your changes here, I'd be more than glad, but hey, this is just a lousy fork
+for me to learn, so unless your intentions are purely evil, or just not serious enough, 
+send your contributions to the main repo. https://github.com/uniquerockrz/smsh
+
+
+
+
+
+				--- The End ---
