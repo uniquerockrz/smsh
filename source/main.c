@@ -28,7 +28,7 @@ int main (int argc, char *argv[])
     printf("===========================================================\n\n");
     printf("This is a very crude and rude version of the program.\n");
     printf("It sometimes works, it sometimes doesn't. DO NOT COMPLAIN.\n");
-    printf("Original Author: Saurav Modak.\n"\n);
+    printf("Original Author: Saurav Modak.\n\n");
     printf("... Krishnashish Gogoi ...\n");
     
     // Sets the current time in a certain format in lastmsg.txt.
