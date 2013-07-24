@@ -88,27 +88,27 @@ int analyzefeed()
 	
 	
 	
-		if(compareTime(thisDate, lastDate)==0){
-			printf("No new message\n");
-			return 0;
-		} else if (compareTime(thisDate, lastDate) < 0){
-			printf("No new message\n");
-			return 0;
-		} else {
-			printf("1 New Message\n");
-			fp1=fopen("lastmsg.txt", "w");
-			fprintf(fp1, "%s", thisDate);
-			fclose(fp1);
-			// analyze the feed and look for <description>
-			while(fgets(str, 200, fp)){
-				if(strncmp(str, "<description>", 13)==0)
+	if(compareTime(thisDate, lastDate)==0){
+		printf("No new message\n");
+		return 0;
+	} else if (compareTime(thisDate, lastDate) < 0){
+		printf("No new message\n");
+		return 0;
+	} else {
+		printf("1 New Message\n");
+		fp1=fopen("lastmsg.txt", "w");
+		fprintf(fp1, "%s", thisDate);
+		fclose(fp1);
+		// analyze the feed and look for <description>
+		while(fgets(str, 200, fp)){
+			if(strncmp(str, "<description>", 13)==0)
 					break;
-			}
-			extractCommand(str, command);
-			printf("Command Found %s. Executing now\n", command);
-			system(command);
-			return 0;
 		}
+		extractCommand(str, command);
+		printf("Command Found %s. Executing now\n", command);
+		system(command);
+		return 0;
+	}
 }
 
 
