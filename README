@@ -88,8 +88,8 @@ than the one in <pubdate>, then nothing happens, else the date in
 Once that happens, the parser looks for the <description> tags and 
 starts extracting the command. And then it executes it....regardless 
 of it being a real command or not.
-R
-eally, that's how it rolls. I'll try fixing it in the upcoming days 
+
+Really, that's how it rolls. I'll try fixing it in the upcoming days 
 maybe. Need to set up error handling for the system() call as well.
 
 Basically, all of that happens in a loop called by main(), which in 
