@@ -21,19 +21,19 @@
 
 int get_page(const char* url, const char* file_name)
 {
-    /* get_page()
-     * function to download the RSS feed specified by url and
-     * save it by file_name
-     */
-    CURL *easyhandle; 
-    CURLcode result;
-    FILE *file;
+	/* get_page()
+	* function to download the RSS feed specified by url and
+	* save it by file_name
+	*/
+	CURL *easyhandle; 
+	CURLcode result;
+	FILE *file;
     
-    // Initialize the handle
-    easyhandle = curl_easy_init();
+	// Initialize the handle
+	easyhandle = curl_easy_init();
     
-    // Checking if easyhandle initialized okay.
-    if (easyhandle) {
+	// Checking if easyhandle initialized okay.
+	if (easyhandle) {
 		curl_easy_setopt( easyhandle, CURLOPT_URL, url ) ;
 		 
 		file = fopen( file_name, "w");
@@ -52,11 +52,11 @@ int get_page(const char* url, const char* file_name)
 		return 1;
 	}
     
-    // Cleaning up because I try to hide the fact that 
-    // I lead a very unhygenic real life by doing cleanups
-    // in my code. :)
-    curl_easy_cleanup( easyhandle );
-    curl_global_cleanup();
+	// Cleaning up because I try to hide the fact that 
+	// I lead a very unhygenic real life by doing cleanups
+	// in my code. :)
+	curl_easy_cleanup( easyhandle );
+	curl_global_cleanup();
     
-    return 0;
+	return 0;
 }
