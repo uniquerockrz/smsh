@@ -63,52 +63,52 @@
 int analyzefeed() 
 {
 	char str[200], str2[200], command[200], thisDate[80], lastDate[80];
-    FILE *fp, *fp1;
-    fp=fopen(".feed", "r");
-    // analyze the feed and look for </image>
-    while(fgets(str, 200, fp)){
-        if(strncmp(str, "</image>", 8)==0)
-            break;
+	FILE *fp, *fp1;
+	fp=fopen(".feed", "r");
+	// analyze the feed and look for </image>
+	while(fgets(str, 200, fp)){
+		if(strncmp(str, "</image>", 8)==0)
+			break;
 	}
         
 			
-    // analyze the feed and look for <pubDate>
-    while(fgets(str, 200, fp)){
-        if(strncmp(str, "<pubDate>", 9)==0)
-            break;
+	// analyze the feed and look for <pubDate>
+	while(fgets(str, 200, fp)){
+		if(strncmp(str, "<pubDate>", 9)==0)
+			break;
             
-    }
+	}
     
-    substring(str, 14, 14, thisDate);
+	substring(str, 14, 14, thisDate);
     
     
-    fp1=fopen("lastmsg.txt", "r");
-    fgets(str2, 80, fp1);
-    fclose(fp1);
+	fp1=fopen("lastmsg.txt", "r");
+	fgets(str2, 80, fp1);
+	fclose(fp1);
 	
 	
 	
-	if(compareTime(thisDate, lastDate)==0){
-        printf("No new message\n");
-        return 0;
-    } else if(compareTime(thisDate, lastDate) < 0){
-        printf("No new message\n");
-        return 0;
-    } else {
-		printf("1 New Message\n");
-        fp1=fopen("lastmsg.txt", "w");
-        fprintf(fp1, "%s", thisDate);
-        fclose(fp1);
-        // analyze the feed and look for <description>
-        while(fgets(str, 200, fp)){
-            if(strncmp(str, "<description>", 13)==0)
-                break;
-            }
-        extractCommand(str, command);
-        printf("Command Found %s. Executing now\n", command);
-        system(command);
-        return 0;
-    }
+		if(compareTime(thisDate, lastDate)==0){
+			printf("No new message\n");
+			return 0;
+		} else if (compareTime(thisDate, lastDate) < 0){
+			printf("No new message\n");
+			return 0;
+		} else {
+			printf("1 New Message\n");
+			fp1=fopen("lastmsg.txt", "w");
+			fprintf(fp1, "%s", thisDate);
+			fclose(fp1);
+			// analyze the feed and look for <description>
+			while(fgets(str, 200, fp)){
+				if(strncmp(str, "<description>", 13)==0)
+					break;
+			}
+			extractCommand(str, command);
+			printf("Command Found %s. Executing now\n", command);
+			system(command);
+			return 0;
+		}
 }
 
 
@@ -174,17 +174,18 @@ int compareTime (char *date1, char *date2)
 */
 
 
-void extractCommand(char *src, char *dest){
-    /* extracts the command to be
-     * executed from XML
-     */
-    int i=22, j=0, flag=1;
-    while(flag){
-        dest[j]=src[i];
-        if(src[i+1]==']' && src[i+2]==']')
-            flag=0;
-        j++;
-        i++;
-    }
-    dest[j++]='\0';
+void extractCommand(char *src, char *dest)
+{
+	/* extracts the command to be
+	* executed from XML
+	*/
+	int i=22, j=0, flag=1;
+	while(flag){
+		dest[j]=src[i];
+		if(src[i+1]==']' && src[i+2]==']')
+			flag=0;
+			j++;
+			i++;
+	}
+	dest[j++]='\0';
 }
