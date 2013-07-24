@@ -1,0 +1,29 @@
+##########################################
+# file : FIXES
+# Copyright 2013 Krishnashish Gogoi
+# Released under GPLv3
+#
+# Describes changes I've made to the 
+# original program.
+#
+# These are more like personal updates
+# of what I do with this fork.
+#
+#
+##########################################
+
+
+
+--- Update - 1 --- 24 July 2013
+
+	- Fixed a bug that caused segfaults.
+	- Modularized the entire program.
+	- Added some potato comments.
+	- Moved the start() routine from recursion to iteration.
+	- Wrote a compareTime() function to properly compare time.
+	- Wrote a substring() function to pick out dates from <pubDate> tag.
+	- Created README, FIXES, COPYING, original/, sources/.
+	- Added a Makefile.
+	- Ate a hot pocket. And a baked potato.
+
+--- Krishnashish Gogoi ----------------------------------------------------------
