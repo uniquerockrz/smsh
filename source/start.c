@@ -23,20 +23,20 @@ void start (char *url)
 	// Prints time before doing everything because 
 	// I love pretending to be a person who values his time.
 	time_t currenttime;
-    struct tm *loctime;
-    currenttime=time(NULL);
-    loctime= localtime(&currenttime);
-    fputs(asctime(loctime), stdout); // printing time
+	struct tm *loctime;
+	currenttime=time(NULL);
+	loctime= localtime(&currenttime);
+	fputs(asctime(loctime), stdout); // printing time
     
-    printf("Checking inbox now.... ");
+	printf("Checking inbox now.... ");
     
-    // variables for return codes from the functions.
-    // Not really sure why I did this.
-    int pageStatus, analyzeStatus;
+	// variables for return codes from the functions.
+	// Not really sure why I did this.
+	int pageStatus, analyzeStatus;
     
-    pageStatus = get_page( url, ".downloaded_feed" );
+	pageStatus = get_page( url, ".downloaded_feed" );
     
-    if (pageStatus == 0) {
+	if (pageStatus == 0) {
 		printf("done\n");
 		printf("Looking for any new message... ");
 		
